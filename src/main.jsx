@@ -1,10 +1,33 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { RouterProvider } from "react-router-dom";
+import router from "./router/PublicRouter/PublicRouter.jsx";
+import AuthContextProvider from "./ContextProvider/AuthContextProvider";
+import { ToastContainer } from "react-toastify";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <div className="max-w-[1800px] mx-auto px-2 ">
+    
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
+    {/* Same as */}
+    <ToastContainer />
+    <React.StrictMode>
+      <AuthContextProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </AuthContextProvider>
+    </React.StrictMode>
+  </div>
+);
