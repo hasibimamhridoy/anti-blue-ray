@@ -3,11 +3,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../../layouts/MainLayout/MainLayout';
 import Home from '../../pages/Home/Home/Home';
 import Login from '../../pages/LoginRegister/Login/Login';
-import ProductsDetails from '../../pages/ProductsDetails/ProductsDetails';
-
 import ErrorPage from '../../pages/ErrorPage/ErrorPage';
 import AdminOrders from '../../pages/AdminOrders/AdminOrders';
 import MyOrders from '../../pages/MyOrders/MyOrders';
+import BuyNow from '../../pages/Home/Products/BuyNow';
+import PrivateRouter from '../PrivateRouter/PrivateRouter';
 
 const router =createBrowserRouter([
     
@@ -35,9 +35,9 @@ const router =createBrowserRouter([
             },
             
             {
-                path:'/productsDetails/:id',
-                element:<ProductsDetails></ProductsDetails>,
-                loader:({params})=>fetch(`https://heroverse-toys-server-site.vercel.app/productsDetails/${params.id}`)
+                path:'buyNow/:id',
+                element:<PrivateRouter><BuyNow></BuyNow></PrivateRouter>,
+                loader:({params})=>fetch(`http://localhost:5000/products/${params.id}`)
             },
             
            
