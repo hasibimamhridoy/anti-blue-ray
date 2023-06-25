@@ -30,7 +30,7 @@ useEffect(()=>{
   
 
   return (
-    <div className="bg-gray-900">
+    <div className="bg-gray-900 lg:px-16 px-2">
       <ScrollRestoration></ScrollRestoration>
       <div>
         <NavigationBar></NavigationBar>

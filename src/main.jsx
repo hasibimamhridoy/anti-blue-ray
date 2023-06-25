@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <div className="max-w-[1800px] mx-auto px-2 ">
+  <div className="max-w-[1800px] mx-auto">
     
     <ToastContainer
       position="top-right"

@@ -34,6 +34,9 @@ const MyOrders = () => {
               Color
             </th>
             <th scope="col" className="px-6 py-3">
+              Delivary Method
+            </th>
+            <th scope="col" className="px-6 py-3">
               Price
             </th>
           </tr>
@@ -52,6 +55,9 @@ const MyOrders = () => {
                   {od.name}
                 </th>
                 <td className="px-6 py-4">{od.color}</td>
+                
+                <td className="px-6 py-4">{od.expressPrice ? "Express Delivary" : ""}</td>
+                
                 <td className="px-6 py-4">{od.price}</td>
               </tr>
             );

@@ -1,43 +1,66 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import SectionTitle from "../../shared/SectionTitle/SectionTitle";
 
 const AdminOrders = () => {
+  const [order, setOrder] = useState([]);
   const [allOrders, setAllOrders] = useState(true);
   const [regularOrders, setRegularOrders] = useState(false);
   const [expressOrders, setExpressOrders] = useState(false);
+  const [countDocumentsState, setCountDocumentState] = useState();
 
-  const handleAllOrders = () => {
+  const handleAllOrders = useCallback(() => {
     setAllOrders(true);
     setRegularOrders(false);
     setExpressOrders(false);
     fetchData();
-  };
+  },[]);
+
   const handleRegularOrders = () => {
     setAllOrders(false);
     setRegularOrders(true);
     setExpressOrders(false);
-    fetchData('regularType=regular');
+    fetchData("regularType=regular");
   };
   const handleExpressOrders = () => {
     setAllOrders(false);
     setRegularOrders(false);
     setExpressOrders(true);
-    fetchData('expressType=regular');
+    fetchData("expressType=regular");
   };
 
-  console.log(allOrders);
-  console.log(regularOrders);
-  console.log(expressOrders);
+  //here is pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageLimit, setPageLimit] = useState(4);
+  const pages = parseInt(Math.ceil(countDocumentsState / pageLimit));
+  console.log(pages);
+  const pageButton = [];
+  for (let index = 0; index < pages; index++) {
+    pageButton.push(index);
+  }
 
-  const [order, setOrder] = useState([]);
+  const handlePreviousPage = () => {
+    if (currentPage == 0) {
+      setCurrentPage(0);
+    } else {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const handleNextPage = () => {
+    if (currentPage == Math.max(...pageButton)) {
+      setCurrentPage(Math.max(...pageButton));
+    } else {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage,pageLimit]);
 
   async function fetchData(orderType) {
     try {
       const response = await fetch(
-        `http://localhost:5000/allOrders?${orderType}`
+        `http://localhost:5000/allOrders?${orderType}&page=${currentPage}&limit=${pageLimit}`
       );
       const data = await response.json();
       setOrder(data);
@@ -46,10 +69,26 @@ const AdminOrders = () => {
     }
   }
 
+  useEffect(() => {
+    countDocument();
+  }, []);
+
+  async function countDocument() {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/allOrders/countDocuments`
+      );
+      const data = await response.json();
+      setCountDocumentState(data.count);
+    } catch (error) {
+      console.log("Error fetching order details:", error);
+    }
+  }
+
   return (
     <div className="w-full">
-      This is admin orders
-      <div className="border">
+      <SectionTitle title="Admin Dashboard"></SectionTitle>
+      <div className="">
         <div className="space-x-5 tabButton p-2 mx-auto">
           <div className="flex justify-center gap-5">
             <button
@@ -120,6 +159,56 @@ const AdminOrders = () => {
               </tbody>
             </table>
           </div>
+
+          {allOrders && <div className="flex justify-center px-5 mt-5">
+            <nav aria-label="Page navigation example">
+              <ul className="flex gap-y-7 flex-wrap flex-shrink flex-grow -space-x-px">
+                <li>
+                  <a
+                    onClick={handlePreviousPage}
+                    className="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  >
+                    Previous
+                  </a>
+                </li>
+
+                {pageButton.map((btn) => {
+                  return (
+                    <li onClick={() => setCurrentPage(btn)} key={btn}>
+                      <a
+                        className={`px-3 py-2 leading-tight text-gray-500 border dark:bg-gray-800 cursor-pointer dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                          currentPage === btn &&
+                          "bg-purple-700 text-white border-none hover:bg-purple-700 border border-white hover:text-white"
+                        }`}
+                      >
+                        {btn}
+                      </a>
+                    </li>
+                  );
+                })}
+
+                <li>
+                  <a
+                    onClick={handleNextPage}
+                    className="px-3 mr-5 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  >
+                    Next
+                  </a>
+                </li>
+                <div className="ml-3">
+                  <select
+                    onChange={(e) => setPageLimit(e.target.value)}
+                    id="countries"
+                    className="bg-gray-50 -mt-2 w-[3.5rem] text-gray-900 text-sm rounded-lg  block p-2.5"
+                  >
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
+                </div>
+              </ul>
+            </nav>
+          </div>}
         </div>
       </div>
     </div>

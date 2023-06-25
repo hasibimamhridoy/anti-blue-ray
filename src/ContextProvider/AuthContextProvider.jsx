@@ -41,13 +41,41 @@ const AuthContextProvider = ({ children }) => {
     return () => unSubscribe();
   }, []);
 
+
+  const [isAdmin, setIsAdmin] = useState({});
+
+  useEffect(() => {
+    fetchData();
+  }, [user]);
+
+  async function fetchData() {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/isAdmin/${user?.email}`
+      );
+      const data = await response.json();
+      console.log(data);
+      setIsAdmin(data.admin);
+    } catch (error) {
+      console.log("Error fetching order details:", error);
+    }
+  }
+
+console.log(isAdmin);
+console.log(user);
+
   const authInfo = {
     user,
     loading,
     handleGoogleRegister,
     handleManualLogin,
     handleManualLogout,
+    isAdmin
   };
+
+
+
+
   return (
     <div>
       <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

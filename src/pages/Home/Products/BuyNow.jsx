@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../../ContextProvider/AuthContextProvider";
+import { toast } from "react-toastify";
 
 const BuyNow = () => {
   const product = useLoaderData();
@@ -39,13 +40,20 @@ const BuyNow = () => {
         body: JSON.stringify(orderProduct),
       });
 
-      // Handle the response as needed
       if (response.ok) {
-        console.log("Product successfully created!");
-        // Perform any additional actions upon successful creation
+        console.log("Place order successfully !");
+        toast.success('Place order successfully !', {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       } else {
         console.log("Product creation failed!");
-        // Handle error cases
       }
     } catch (error) {
       console.log("Error sending the POST request:", error);

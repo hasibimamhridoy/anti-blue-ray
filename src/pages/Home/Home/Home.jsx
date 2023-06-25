@@ -1,11 +1,11 @@
+import SectionTitle from "../../../shared/SectionTitle/SectionTitle";
 import Products from "../Products/Products";
 
-
 const Home = () => {
-
   return (
     <div className="text-white">
-      This is Home
+      
+      <SectionTitle title="All Glassess"></SectionTitle>
 
       <Products></Products>
     </div>
