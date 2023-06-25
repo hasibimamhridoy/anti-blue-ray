@@ -32,7 +32,7 @@ const BuyNow = () => {
     const userEmail = user?.email
     const orderProduct = { expressPrice, productid: _id, name, image, price,userEmail,color };
     try {
-      const response = await fetch("http://localhost:5000/products", {
+      const response = await fetch("https://anti-blue-ray-server.vercel.app/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

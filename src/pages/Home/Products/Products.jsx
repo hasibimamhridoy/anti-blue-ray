@@ -11,7 +11,7 @@ const Products = () => {
 
   async function fetchData() {
     try {
-      const response = await fetch('http://localhost:5000/products');
+      const response = await fetch('https://anti-blue-ray-server.vercel.app/products');
       const data = await response.json();
       setProducts(data);
     } catch (error) {

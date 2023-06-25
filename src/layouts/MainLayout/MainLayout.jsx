@@ -10,20 +10,20 @@ useEffect(()=>{
 
     if (loc.pathname == '/login') {
 
-         document.title = "HeroVerse - LOGIN"
+         document.title = "AntiRay - LOGIN"
    }
 
     else if (loc.state) {
-          document.title = `HeroVerse - ${loc.state}`
+          document.title = `AntiRay - ${loc.state}`
     }
 
     else if (loc.pathname === '/') {
 
-         document.title = "HeroVerse - Home"
+         document.title = "AntiRay - Home"
     }
    
     else{
-         document.title = `HeroVerse ${loc.pathname.toUpperCase()}`.replace('/','-')
+         document.title = `AntiRay ${loc.pathname.toUpperCase()}`.replace('/','-')
     }
 
 },[loc.pathname,loc.state])

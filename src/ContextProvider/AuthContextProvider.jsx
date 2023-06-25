@@ -51,7 +51,7 @@ const AuthContextProvider = ({ children }) => {
   async function fetchData() {
     try {
       const response = await fetch(
-        `http://localhost:5000/isAdmin/${user?.email}`
+        `https://anti-blue-ray-server.vercel.app/isAdmin/${user?.email}`
       );
       const data = await response.json();
       console.log(data);

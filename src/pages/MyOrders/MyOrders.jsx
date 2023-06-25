@@ -13,7 +13,7 @@ const MyOrders = () => {
   async function fetchData() {
     try {
       const response = await fetch(
-        `http://localhost:5000/myOrders/${user?.email}`
+        `https://anti-blue-ray-server.vercel.app/myOrders/${user?.email}`
       );
       const data = await response.json();
       setOrder(data);

@@ -37,7 +37,7 @@ const router =createBrowserRouter([
             {
                 path:'buyNow/:id',
                 element:<PrivateRouter><BuyNow></BuyNow></PrivateRouter>,
-                loader:({params})=>fetch(`http://localhost:5000/products/${params.id}`)
+                loader:({params})=>fetch(`https://anti-blue-ray-server.vercel.app/products/${params.id}`)
             },
             
            

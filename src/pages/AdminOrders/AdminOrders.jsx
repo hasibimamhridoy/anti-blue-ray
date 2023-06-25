@@ -60,7 +60,7 @@ const AdminOrders = () => {
   async function fetchData(orderType) {
     try {
       const response = await fetch(
-        `http://localhost:5000/allOrders?${orderType}&page=${currentPage}&limit=${pageLimit}`
+        `https://anti-blue-ray-server.vercel.app/allOrders?${orderType}&page=${currentPage}&limit=${pageLimit}`
       );
       const data = await response.json();
       setOrder(data);
@@ -76,7 +76,7 @@ const AdminOrders = () => {
   async function countDocument() {
     try {
       const response = await fetch(
-        `http://localhost:5000/allOrders/countDocuments`
+        `https://anti-blue-ray-server.vercel.app/allOrders/countDocuments`
       );
       const data = await response.json();
       setCountDocumentState(data.count);
